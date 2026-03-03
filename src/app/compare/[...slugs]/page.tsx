@@ -37,10 +37,10 @@ export default async function ComparePage({ params }: PageProps) {
   if (models.length < 2) {
     return (
       <div className="text-center py-16">
-        <h1 className="text-2xl font-bold text-surface-900 mb-2">
+        <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-50 mb-2">
           Comparison Not Found
         </h1>
-        <p className="text-surface-500 mb-4">
+        <p className="text-surface-500 dark:text-surface-400 mb-4">
           We need at least 2 valid models to compare. Some model IDs may be invalid.
         </p>
         <Link href="/" className="text-primary-600 hover:text-primary-700 font-medium">
@@ -63,10 +63,10 @@ export default async function ComparePage({ params }: PageProps) {
         <Link href="/" className="text-sm text-primary-600 hover:text-primary-700 mb-2 inline-block">
           &larr; Back to all models
         </Link>
-        <h1 className="text-2xl font-bold text-surface-900">
+        <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-50">
           {models.map((m) => m.name).join(" vs ")}
         </h1>
-        <p className="text-surface-500 mt-1">
+        <p className="text-surface-500 dark:text-surface-400 mt-1">
           Side-by-side comparison of pricing, specs, and benchmarks.
         </p>
       </div>

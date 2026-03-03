@@ -26,8 +26,8 @@ export default async function ModelPage({ params }: PageProps) {
   if (!model) {
     return (
       <div className="text-center py-16">
-        <h1 className="text-2xl font-bold text-surface-900 mb-2">Model Not Found</h1>
-        <p className="text-surface-500 mb-4">
+        <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-50 mb-2">Model Not Found</h1>
+        <p className="text-surface-500 dark:text-surface-400 mb-4">
           No model found with ID &ldquo;{id}&rdquo;.
         </p>
         <Link href="/" className="text-primary-600 hover:text-primary-700 font-medium">
@@ -56,8 +56,8 @@ export default async function ModelPage({ params }: PageProps) {
       </Link>
 
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-surface-900">{model.name}</h1>
-        <p className="text-surface-500 text-lg">by {model.provider}</p>
+        <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-50">{model.name}</h1>
+        <p className="text-surface-500 dark:text-surface-400 text-lg">by {model.provider}</p>
       </div>
 
       <ModelDetail model={model} />
@@ -65,16 +65,16 @@ export default async function ModelPage({ params }: PageProps) {
       {/* Related Models */}
       {relatedModels.length > 0 && (
         <section className="mt-12">
-          <h2 className="text-lg font-semibold text-surface-900 mb-4">Compare with</h2>
+          <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-4">Compare with</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {relatedModels.map((related) => (
               <Link
                 key={related.id}
                 href={buildComparisonUrl([model.id, related.id])}
-                className="border border-surface-200 rounded-lg p-4 hover:border-primary-300 hover:shadow-sm transition-all"
+                className="border border-surface-200 dark:border-surface-700 rounded-lg p-4 hover:border-primary-300 hover:shadow-sm transition-all"
               >
-                <div className="font-medium text-surface-900">{related.name}</div>
-                <div className="text-sm text-surface-500">{related.provider}</div>
+                <div className="font-medium text-surface-900 dark:text-surface-50">{related.name}</div>
+                <div className="text-sm text-surface-500 dark:text-surface-400">{related.provider}</div>
                 <div className="text-xs text-primary-600 mt-2">Compare &rarr;</div>
               </Link>
             ))}

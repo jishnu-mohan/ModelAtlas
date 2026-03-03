@@ -12,7 +12,7 @@ export function CompareBar({ selectedIds, onClear }: CompareBarProps) {
   if (selectedIds.length < 2) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-surface-900 text-white py-3 px-4 shadow-lg z-50">
+    <div className="fixed bottom-0 left-0 right-0 bg-surface-900 dark:bg-surface-800 text-white border-t dark:border-surface-700 py-3 px-4 shadow-lg z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <span className="text-sm">
           {selectedIds.length} models selected
@@ -20,7 +20,7 @@ export function CompareBar({ selectedIds, onClear }: CompareBarProps) {
         <div className="flex items-center gap-3">
           <button
             onClick={onClear}
-            className="text-sm text-surface-300 hover:text-white transition-colors"
+            className="text-sm text-surface-300 dark:text-surface-400 hover:text-white transition-colors"
           >
             Clear
           </button>

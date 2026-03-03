@@ -38,10 +38,10 @@ export default function HomePage() {
   return (
     <div>
       <section className="mb-8">
-        <h1 className="text-3xl font-bold text-surface-900 mb-2">
+        <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-50 mb-2">
           Compare AI Models
         </h1>
-        <p className="text-surface-500 text-lg max-w-2xl">
+        <p className="text-surface-500 dark:text-surface-400 text-lg max-w-2xl">
           Side-by-side comparison of pricing, specs, and benchmarks across leading AI providers. Select models to compare.
         </p>
       </section>
@@ -55,11 +55,11 @@ export default function HomePage() {
         <FilterPanel filters={filters} onChange={setFilters} providers={providers} />
 
         <div className="flex items-center gap-3">
-          <label className="text-sm text-surface-500">Sort by:</label>
+          <label className="text-sm text-surface-500 dark:text-surface-400">Sort by:</label>
           <select
             value={sortField}
             onChange={(e) => setSortField(e.target.value as SortField)}
-            className="text-sm border border-surface-300 rounded-lg px-3 py-1.5 bg-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+            className="text-sm border border-surface-300 dark:border-surface-600 rounded-lg px-3 py-1.5 bg-white dark:bg-surface-800 dark:text-surface-50 focus:outline-none focus:ring-2 focus:ring-primary-500"
           >
             <option value="name">Name</option>
             <option value="provider">Provider</option>
@@ -70,7 +70,7 @@ export default function HomePage() {
           </select>
           <button
             onClick={() => setSortDir(sortDir === "asc" ? "desc" : "asc")}
-            className="text-sm border border-surface-300 rounded-lg px-3 py-1.5 bg-white hover:bg-surface-50 transition-colors"
+            className="text-sm border border-surface-300 dark:border-surface-600 rounded-lg px-3 py-1.5 bg-white dark:bg-surface-800 dark:text-surface-50 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors"
           >
             {sortDir === "asc" ? "Ascending" : "Descending"}
           </button>

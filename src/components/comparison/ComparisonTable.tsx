@@ -32,31 +32,31 @@ export function ComparisonTable({ models }: ComparisonTableProps) {
   return (
     <div>
       <div className="flex items-center gap-3 mb-4">
-        <label className="flex items-center gap-2 text-sm text-surface-600 cursor-pointer">
+        <label className="flex items-center gap-2 text-sm text-surface-600 dark:text-surface-300 cursor-pointer">
           <input
             type="checkbox"
             checked={showOnlyDiffs}
             onChange={(e) => setShowOnlyDiffs(e.target.checked)}
-            className="rounded border-surface-300 text-primary-600 focus:ring-primary-500"
+            className="rounded border-surface-300 dark:border-surface-600 text-primary-600 focus:ring-primary-500"
           />
           Show only differences
         </label>
       </div>
 
-      <div className="overflow-x-auto border border-surface-200 rounded-lg">
+      <div className="overflow-x-auto border border-surface-200 dark:border-surface-700 rounded-lg">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-surface-50 sticky top-0 z-10">
-              <th className="text-left p-3 font-semibold text-surface-600 border-b border-surface-200 min-w-[160px]">
+            <tr className="bg-surface-50 dark:bg-surface-800 sticky top-0 z-10">
+              <th className="text-left p-3 font-semibold text-surface-600 dark:text-surface-300 border-b border-surface-200 dark:border-surface-700 min-w-[160px]">
                 Feature
               </th>
               {models.map((model) => (
                 <th
                   key={model.id}
-                  className="text-left p-3 font-semibold text-surface-900 border-b border-surface-200 min-w-[180px]"
+                  className="text-left p-3 font-semibold text-surface-900 dark:text-surface-50 border-b border-surface-200 dark:border-surface-700 min-w-[180px]"
                 >
                   <div>{model.name}</div>
-                  <div className="text-xs font-normal text-surface-500">{model.provider}</div>
+                  <div className="text-xs font-normal text-surface-500 dark:text-surface-400">{model.provider}</div>
                 </th>
               ))}
             </tr>
@@ -75,11 +75,11 @@ export function ComparisonTable({ models }: ComparisonTableProps) {
                   {visibleFields.map((field) => {
                     const isDiff = differences.has(field.key);
                     return (
-                      <tr key={field.key} className="border-b border-surface-100 hover:bg-surface-50/50">
-                        <td className="p-3 text-surface-600 font-medium">
+                      <tr key={field.key} className="border-b border-surface-100 dark:border-surface-700 hover:bg-surface-50/50 dark:hover:bg-surface-800/50">
+                        <td className="p-3 text-surface-600 dark:text-surface-300 font-medium">
                           {field.tooltip ? (
                             <Tooltip text={field.tooltip}>
-                              <span className="border-b border-dotted border-surface-400 cursor-help">
+                              <span className="border-b border-dotted border-surface-400 dark:border-surface-500 cursor-help">
                                 {field.label}
                               </span>
                             </Tooltip>
@@ -92,7 +92,7 @@ export function ComparisonTable({ models }: ComparisonTableProps) {
                           return (
                             <td
                               key={model.id}
-                              className={`p-3 ${isDiff ? "bg-yellow-50" : ""}`}
+                              className={`p-3 ${isDiff ? "bg-yellow-50 dark:bg-yellow-900/20" : ""}`}
                             >
                               {formatFieldValue(field.format, val)}
                             </td>
@@ -112,12 +112,12 @@ export function ComparisonTable({ models }: ComparisonTableProps) {
                   .map((key) => {
                     const isDiff = differences.has(`benchmark:${key}`);
                     return (
-                      <tr key={key} className="border-b border-surface-100 hover:bg-surface-50/50">
-                        <td className="p-3 text-surface-600 font-medium">{key}</td>
+                      <tr key={key} className="border-b border-surface-100 dark:border-surface-700 hover:bg-surface-50/50 dark:hover:bg-surface-800/50">
+                        <td className="p-3 text-surface-600 dark:text-surface-300 font-medium">{key}</td>
                         {models.map((model) => (
                           <td
                             key={model.id}
-                            className={`p-3 ${isDiff ? "bg-yellow-50" : ""}`}
+                            className={`p-3 ${isDiff ? "bg-yellow-50 dark:bg-yellow-900/20" : ""}`}
                           >
                             {model.benchmarks?.[key] != null
                               ? model.benchmarks[key].toFixed(1)
@@ -133,7 +133,7 @@ export function ComparisonTable({ models }: ComparisonTableProps) {
         </table>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-4 text-xs text-surface-400">
+      <div className="mt-4 flex flex-wrap gap-4 text-xs text-surface-400 dark:text-surface-500">
         {models.map((m) => (
           <div key={m.id}>
             {m.name} pricing:{" "}
@@ -159,7 +159,7 @@ function CategorySection({ label, children }: { label: string; children: React.R
       <tr>
         <td
           colSpan={100}
-          className="px-3 py-2 bg-surface-100 text-xs font-bold text-surface-500 uppercase tracking-wider"
+          className="px-3 py-2 bg-surface-100 dark:bg-surface-700 text-xs font-bold text-surface-500 dark:text-surface-400 uppercase tracking-wider"
         >
           {label}
         </td>

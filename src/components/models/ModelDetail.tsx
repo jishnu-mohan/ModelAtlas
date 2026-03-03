@@ -26,7 +26,7 @@ export function ModelDetail({ model }: ModelDetailProps) {
 
       {/* Pricing */}
       <section>
-        <h2 className="text-lg font-semibold text-surface-900 mb-3 border-b border-surface-200 pb-2">
+        <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-3 border-b border-surface-200 dark:border-surface-700 pb-2">
           Pricing
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -47,14 +47,14 @@ export function ModelDetail({ model }: ModelDetailProps) {
             }
           />
         </div>
-        <p className="text-xs text-surface-400 mt-2">
+        <p className="text-xs text-surface-400 dark:text-surface-500 mt-2">
           Last updated: {new Date(model.lastUpdated).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
         </p>
       </section>
 
       {/* Technical Specs */}
       <section>
-        <h2 className="text-lg font-semibold text-surface-900 mb-3 border-b border-surface-200 pb-2">
+        <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-3 border-b border-surface-200 dark:border-surface-700 pb-2">
           Technical Specifications
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -70,7 +70,7 @@ export function ModelDetail({ model }: ModelDetailProps) {
 
       {/* Capabilities */}
       <section>
-        <h2 className="text-lg font-semibold text-surface-900 mb-3 border-b border-surface-200 pb-2">
+        <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-3 border-b border-surface-200 dark:border-surface-700 pb-2">
           Capabilities
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -86,15 +86,15 @@ export function ModelDetail({ model }: ModelDetailProps) {
       {/* Benchmarks */}
       {model.benchmarks && Object.keys(model.benchmarks).length > 0 && (
         <section>
-          <h2 className="text-lg font-semibold text-surface-900 mb-3 border-b border-surface-200 pb-2">
+          <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-50 mb-3 border-b border-surface-200 dark:border-surface-700 pb-2">
             Benchmarks
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {Object.entries(model.benchmarks).map(([key, value]) => (
-              <div key={key} className="bg-surface-50 rounded-lg p-4">
-                <div className="text-sm text-surface-500 mb-1">{key}</div>
-                <div className="text-2xl font-bold text-surface-900">{value.toFixed(1)}</div>
-                <div className="mt-2 w-full bg-surface-200 rounded-full h-2">
+              <div key={key} className="bg-surface-50 dark:bg-surface-800 rounded-lg p-4">
+                <div className="text-sm text-surface-500 dark:text-surface-400 mb-1">{key}</div>
+                <div className="text-2xl font-bold text-surface-900 dark:text-surface-50">{value.toFixed(1)}</div>
+                <div className="mt-2 w-full bg-surface-200 dark:bg-surface-700 rounded-full h-2">
                   <div
                     className="bg-primary-500 h-2 rounded-full"
                     style={{ width: `${Math.min(value, 100)}%` }}
@@ -111,9 +111,9 @@ export function ModelDetail({ model }: ModelDetailProps) {
 
 function InfoCard({ label, value }: { label: string; value: React.ReactNode }) {
   return (
-    <div className="bg-surface-50 rounded-lg p-4">
-      <div className="text-xs text-surface-500 uppercase tracking-wider mb-1">{label}</div>
-      <div className="text-sm font-medium text-surface-800">{value}</div>
+    <div className="bg-surface-50 dark:bg-surface-800 rounded-lg p-4">
+      <div className="text-xs text-surface-500 dark:text-surface-400 uppercase tracking-wider mb-1">{label}</div>
+      <div className="text-sm font-medium text-surface-800 dark:text-surface-100">{value}</div>
     </div>
   );
 }
@@ -121,10 +121,10 @@ function InfoCard({ label, value }: { label: string; value: React.ReactNode }) {
 function CapabilityItem({ label, supported }: { label: string; supported: boolean }) {
   return (
     <div className="flex items-center gap-2 p-2">
-      <span className={`text-lg ${supported ? "text-green-500" : "text-surface-300"}`}>
+      <span className={`text-lg ${supported ? "text-green-500" : "text-surface-300 dark:text-surface-600"}`}>
         {supported ? "\u2713" : "\u2717"}
       </span>
-      <span className={`text-sm ${supported ? "text-surface-800" : "text-surface-400"}`}>
+      <span className={`text-sm ${supported ? "text-surface-800 dark:text-surface-100" : "text-surface-400 dark:text-surface-500"}`}>
         {label}
       </span>
     </div>

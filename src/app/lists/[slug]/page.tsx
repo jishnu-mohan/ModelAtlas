@@ -28,7 +28,7 @@ export default async function ListPage({ params }: PageProps) {
   if (!config) {
     return (
       <div className="text-center py-16">
-        <h1 className="text-2xl font-bold text-surface-900 mb-2">List Not Found</h1>
+        <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-50 mb-2">List Not Found</h1>
         <Link href="/" className="text-primary-600 hover:text-primary-700 font-medium">
           Browse all models
         </Link>
@@ -50,36 +50,36 @@ export default async function ListPage({ params }: PageProps) {
         &larr; Back to all models
       </Link>
 
-      <h1 className="text-3xl font-bold text-surface-900 mb-2">{config.title}</h1>
-      <p className="text-surface-500 text-lg mb-8 max-w-2xl">{config.description}</p>
+      <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-50 mb-2">{config.title}</h1>
+      <p className="text-surface-500 dark:text-surface-400 text-lg mb-8 max-w-2xl">{config.description}</p>
 
-      <div className="overflow-x-auto border border-surface-200 rounded-lg">
+      <div className="overflow-x-auto border border-surface-200 dark:border-surface-700 rounded-lg">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-surface-50">
-              <th className="text-left p-3 font-semibold text-surface-600 border-b border-surface-200">#</th>
-              <th className="text-left p-3 font-semibold text-surface-600 border-b border-surface-200">Model</th>
-              <th className="text-left p-3 font-semibold text-surface-600 border-b border-surface-200">Provider</th>
-              <th className="text-left p-3 font-semibold text-surface-600 border-b border-surface-200">Input $/1M</th>
-              <th className="text-left p-3 font-semibold text-surface-600 border-b border-surface-200">Output $/1M</th>
-              <th className="text-left p-3 font-semibold text-surface-600 border-b border-surface-200">Context</th>
-              <th className="text-left p-3 font-semibold text-surface-600 border-b border-surface-200">Tags</th>
-              <th className="p-3 border-b border-surface-200"></th>
+            <tr className="bg-surface-50 dark:bg-surface-800">
+              <th className="text-left p-3 font-semibold text-surface-600 dark:text-surface-300 border-b border-surface-200 dark:border-surface-700">#</th>
+              <th className="text-left p-3 font-semibold text-surface-600 dark:text-surface-300 border-b border-surface-200 dark:border-surface-700">Model</th>
+              <th className="text-left p-3 font-semibold text-surface-600 dark:text-surface-300 border-b border-surface-200 dark:border-surface-700">Provider</th>
+              <th className="text-left p-3 font-semibold text-surface-600 dark:text-surface-300 border-b border-surface-200 dark:border-surface-700">Input $/1M</th>
+              <th className="text-left p-3 font-semibold text-surface-600 dark:text-surface-300 border-b border-surface-200 dark:border-surface-700">Output $/1M</th>
+              <th className="text-left p-3 font-semibold text-surface-600 dark:text-surface-300 border-b border-surface-200 dark:border-surface-700">Context</th>
+              <th className="text-left p-3 font-semibold text-surface-600 dark:text-surface-300 border-b border-surface-200 dark:border-surface-700">Tags</th>
+              <th className="p-3 border-b border-surface-200 dark:border-surface-700"></th>
             </tr>
           </thead>
           <tbody>
             {models.map((model, i) => (
-              <tr key={model.id} className="border-b border-surface-100 hover:bg-surface-50/50">
-                <td className="p-3 text-surface-400">{i + 1}</td>
+              <tr key={model.id} className="border-b border-surface-100 dark:border-surface-700 hover:bg-surface-50/50 dark:hover:bg-surface-800/50">
+                <td className="p-3 text-surface-400 dark:text-surface-500">{i + 1}</td>
                 <td className="p-3">
                   <Link
                     href={`/models/${model.id}`}
-                    className="font-medium text-surface-900 hover:text-primary-600 transition-colors"
+                    className="font-medium text-surface-900 dark:text-surface-50 hover:text-primary-600 transition-colors"
                   >
                     {model.name}
                   </Link>
                 </td>
-                <td className="p-3 text-surface-600">{model.provider}</td>
+                <td className="p-3 text-surface-600 dark:text-surface-300">{model.provider}</td>
                 <td className="p-3 font-mono">${model.inputTokenPricePer1M.toFixed(2)}</td>
                 <td className="p-3 font-mono">${model.outputTokenPricePer1M.toFixed(2)}</td>
                 <td className="p-3">{formatContext(model.contextWindow)}</td>

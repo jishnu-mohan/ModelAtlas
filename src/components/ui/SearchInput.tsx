@@ -38,12 +38,12 @@ export function SearchInput({ value, onChange, placeholder = "Search models..." 
         value={local}
         onChange={handleChange}
         placeholder={placeholder}
-        className="w-full pl-10 pr-4 py-2 border border-surface-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white"
+        className="w-full pl-10 pr-4 py-2 border border-surface-300 dark:border-surface-600 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white dark:bg-surface-800 dark:text-surface-50"
       />
       {local && (
         <button
           onClick={() => { setLocal(""); onChange(""); }}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-surface-400 hover:text-surface-600"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-surface-400 dark:text-surface-500 hover:text-surface-600 dark:hover:text-surface-300"
           aria-label="Clear search"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

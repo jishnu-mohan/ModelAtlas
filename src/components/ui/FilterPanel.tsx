@@ -42,15 +42,15 @@ export function FilterPanel({ filters, onChange, providers }: FilterPanelProps) 
   }
 
   return (
-    <div className="border border-surface-200 rounded-lg bg-white">
+    <div className="border border-surface-200 dark:border-surface-700 rounded-lg bg-white dark:bg-surface-800">
       <button
-        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-surface-700"
+        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-surface-700 dark:text-surface-200"
         onClick={() => setExpanded(!expanded)}
       >
         <span>
           Filters
           {activeCount > 0 && (
-            <span className="ml-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary-100 text-primary-700 text-xs">
+            <span className="ml-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs">
               {activeCount}
             </span>
           )}
@@ -66,7 +66,7 @@ export function FilterPanel({ filters, onChange, providers }: FilterPanelProps) 
       </button>
 
       {expanded && (
-        <div className="px-4 pb-4 space-y-4 border-t border-surface-200 pt-4">
+        <div className="px-4 pb-4 space-y-4 border-t border-surface-200 dark:border-surface-700 pt-4">
           <FilterSection title="Provider">
             <div className="flex flex-wrap gap-2">
               {providers.map((p) => (
@@ -120,21 +120,21 @@ export function FilterPanel({ filters, onChange, providers }: FilterPanelProps) 
           </FilterSection>
 
           <div className="flex flex-wrap gap-4">
-            <label className="flex items-center gap-2 text-sm text-surface-600 cursor-pointer">
+            <label className="flex items-center gap-2 text-sm text-surface-600 dark:text-surface-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={filters.openSourceOnly}
                 onChange={(e) => onChange({ ...filters, openSourceOnly: e.target.checked })}
-                className="rounded border-surface-300 text-primary-600 focus:ring-primary-500"
+                className="rounded border-surface-300 dark:border-surface-600 text-primary-600 focus:ring-primary-500"
               />
               Open Source Only
             </label>
-            <label className="flex items-center gap-2 text-sm text-surface-600 cursor-pointer">
+            <label className="flex items-center gap-2 text-sm text-surface-600 dark:text-surface-300 cursor-pointer">
               <input
                 type="checkbox"
                 checked={filters.toolCallingOnly}
                 onChange={(e) => onChange({ ...filters, toolCallingOnly: e.target.checked })}
-                className="rounded border-surface-300 text-primary-600 focus:ring-primary-500"
+                className="rounded border-surface-300 dark:border-surface-600 text-primary-600 focus:ring-primary-500"
               />
               Tool Calling
             </label>
@@ -157,7 +157,7 @@ export function FilterPanel({ filters, onChange, providers }: FilterPanelProps) 
 function FilterSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h4 className="text-xs font-semibold text-surface-500 uppercase tracking-wider mb-2">
+      <h4 className="text-xs font-semibold text-surface-500 dark:text-surface-400 uppercase tracking-wider mb-2">
         {title}
       </h4>
       {children}
@@ -171,8 +171,8 @@ function FilterChip({ label, active, onClick }: { label: string; active: boolean
       onClick={onClick}
       className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
         active
-          ? "bg-primary-100 text-primary-700 border-primary-300"
-          : "bg-white text-surface-600 border-surface-300 hover:border-surface-400"
+          ? "bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 border-primary-300 dark:border-primary-700"
+          : "bg-white dark:bg-surface-800 text-surface-600 dark:text-surface-300 border-surface-300 dark:border-surface-600 hover:border-surface-400 dark:hover:border-surface-500"
       }`}
     >
       {label}
