@@ -46,10 +46,6 @@ export default async function ListPage({ params }: PageProps) {
 
   return (
     <div>
-      <Link href="/" className="text-sm text-primary-600 hover:text-primary-700 mb-4 inline-block">
-        &larr; Back to all models
-      </Link>
-
       <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-50 mb-2">{config.title}</h1>
       <p className="text-surface-500 dark:text-surface-400 text-lg mb-8 max-w-2xl">{config.description}</p>
 

@@ -51,10 +51,6 @@ export default async function ModelPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <Link href="/" className="text-sm text-primary-600 hover:text-primary-700 mb-4 inline-block">
-        &larr; Back to all models
-      </Link>
-
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-50">{model.name}</h1>
         <p className="text-surface-500 dark:text-surface-400 text-lg">by {model.provider}</p>

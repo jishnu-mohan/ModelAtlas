@@ -103,18 +103,14 @@ function CalculatorContent() {
 
   return (
     <div>
-      <Link href="/" className="text-sm text-primary-600 hover:text-primary-700 mb-4 inline-block">
-        &larr; Back to all models
-      </Link>
-
-      <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-50 mb-2">
+      <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-50 mb-1">
         Cost Calculator
       </h1>
-      <p className="text-surface-500 dark:text-surface-400 text-lg mb-8 max-w-2xl">
+      <p className="text-surface-500 dark:text-surface-400 text-lg mb-4 max-w-2xl">
         Estimate your monthly API costs across all models. Enter your expected token usage to see projected costs.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
           <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
             Monthly Input Tokens
@@ -176,7 +172,7 @@ function CalculatorContent() {
         </div>
       </div>
 
-      <div className="mb-8 p-4 bg-surface-50 dark:bg-surface-800 rounded-lg border border-surface-200 dark:border-surface-700">
+      <div className="mb-4 p-4 bg-surface-50 dark:bg-surface-800 rounded-lg border border-surface-200 dark:border-surface-700">
         <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-2">
           Estimate tokens from text (optional)
         </label>

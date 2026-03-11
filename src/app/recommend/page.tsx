@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { getAllModels } from "@/lib/data";
 import { getRecommendations } from "@/lib/recommend";
 import type { RecommendationCriteria, ScoredModel } from "@/lib/recommend";
@@ -23,10 +22,6 @@ export default function RecommendPage() {
 
   return (
     <div>
-      <Link href="/" className="text-sm text-primary-600 hover:text-primary-700 mb-4 inline-block">
-        &larr; Back to all models
-      </Link>
-
       {!results && (
         <>
           <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-50 mb-2">

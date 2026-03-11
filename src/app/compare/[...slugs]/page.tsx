@@ -60,9 +60,6 @@ export default async function ComparePage({ params }: PageProps) {
       />
 
       <div className="mb-6">
-        <Link href="/" className="text-sm text-primary-600 hover:text-primary-700 mb-2 inline-block">
-          &larr; Back to all models
-        </Link>
         <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-50">
           {models.map((m) => m.name).join(" vs ")}
         </h1>
