@@ -20,10 +20,10 @@
   --color-surface-300: #cbd5e1;
   --color-surface-400: #94a3b8;
   --color-surface-500: #64748b;
-  --color-surface-600: #475569;
-  --color-surface-700: #334155;
-  --color-surface-800: #1e293b;
-  --color-surface-900: #0f172a;
+  --color-surface-600: #374151;
+  --color-surface-700: #1f2937;
+  --color-surface-800: #111827;
+  --color-surface-900: #030712;
 }
 
 body {

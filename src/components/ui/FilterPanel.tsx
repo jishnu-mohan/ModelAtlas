@@ -42,21 +42,22 @@ export function FilterPanel({ filters, onChange, providers }: FilterPanelProps) 
   }
 
   return (
-    <div className="border border-surface-200 dark:border-surface-700 rounded-lg bg-white dark:bg-surface-800">
+    <div className="relative">
       <button
-        className="w-full flex items-center justify-between px-4 py-3 text-sm font-medium text-surface-700 dark:text-surface-200"
+        className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium border border-surface-300 dark:border-surface-600 rounded-lg bg-white dark:bg-surface-800 text-surface-700 dark:text-surface-200 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors"
         onClick={() => setExpanded(!expanded)}
       >
-        <span>
-          Filters
-          {activeCount > 0 && (
-            <span className="ml-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs">
-              {activeCount}
-            </span>
-          )}
-        </span>
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+        </svg>
+        Filters
+        {activeCount > 0 && (
+          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 text-xs">
+            {activeCount}
+          </span>
+        )}
         <svg
-          className={`w-4 h-4 transition-transform ${expanded ? "rotate-180" : ""}`}
+          className={`w-3.5 h-3.5 transition-transform ${expanded ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -66,7 +67,7 @@ export function FilterPanel({ filters, onChange, providers }: FilterPanelProps) 
       </button>
 
       {expanded && (
-        <div className="px-4 pb-4 space-y-4 border-t border-surface-200 dark:border-surface-700 pt-4">
+        <div className="absolute top-full left-0 mt-2 z-40 w-[480px] max-w-[calc(100vw-2rem)] border border-surface-200 dark:border-surface-700 rounded-lg bg-white dark:bg-surface-800 p-4 space-y-4 shadow-lg">
           <FilterSection title="Provider">
             <div className="flex flex-wrap gap-2">
               {providers.map((p) => (

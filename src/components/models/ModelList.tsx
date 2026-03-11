@@ -22,9 +22,6 @@ export function ModelList({ models, selectedIds, onToggle }: ModelListProps) {
 
   return (
     <div>
-      <p className="text-sm text-surface-500 dark:text-surface-400 mb-4">
-        {models.length} model{models.length !== 1 ? "s" : ""}
-      </p>
       <div className="overflow-x-auto border border-surface-200 dark:border-surface-700 rounded-lg">
         <table className="w-full text-sm">
           <thead>

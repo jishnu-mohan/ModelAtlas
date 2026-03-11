@@ -21,9 +21,6 @@ export function ModelGrid({ models, selectedIds, onToggle }: ModelGridProps) {
 
   return (
     <div>
-      <p className="text-sm text-surface-500 dark:text-surface-400 mb-4">
-        {models.length} model{models.length !== 1 ? "s" : ""}
-      </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {models.map((model) => (
           <ModelCard

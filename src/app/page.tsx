@@ -98,8 +98,8 @@ function HomeContent() {
 
   return (
     <div>
-      <section className="mb-8">
-        <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-50 mb-2">
+      <section className="mb-4">
+        <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-50 mb-1">
           Compare AI Models
         </h1>
         <p className="text-surface-500 dark:text-surface-400 text-lg max-w-2xl">
@@ -107,36 +107,40 @@ function HomeContent() {
         </p>
       </section>
 
-      <div className="space-y-4 mb-6">
-        <SearchInput
-          value={filters.search}
-          onChange={(search) => handleFiltersChange({ ...filters, search })}
-          placeholder="Search by model name, provider, or use case..."
-        />
-        <FilterPanel filters={filters} onChange={handleFiltersChange} providers={providers} />
+      <div className="mb-4">
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex-1 min-w-[200px]">
+            <SearchInput
+              value={filters.search}
+              onChange={(search) => handleFiltersChange({ ...filters, search })}
+              placeholder="Search models..."
+            />
+          </div>
 
-        <div className="flex items-center gap-3">
-          <label className="text-sm text-surface-500 dark:text-surface-400">Sort by:</label>
-          <select
-            value={sortField}
-            onChange={(e) => handleSortFieldChange(e.target.value as SortField)}
-            className="text-sm border border-surface-300 dark:border-surface-600 rounded-lg px-3 py-1.5 bg-white dark:bg-surface-800 dark:text-surface-50 focus:outline-none focus:ring-2 focus:ring-primary-500"
-          >
-            <option value="name">Name</option>
-            <option value="provider">Provider</option>
-            <option value="inputTokenPricePer1M">Input Price</option>
-            <option value="outputTokenPricePer1M">Output Price</option>
-            <option value="contextWindow">Context Window</option>
-            <option value="releaseDate">Release Date</option>
-          </select>
-          <button
-            onClick={handleSortDirChange}
-            className="text-sm border border-surface-300 dark:border-surface-600 rounded-lg px-3 py-1.5 bg-white dark:bg-surface-800 dark:text-surface-50 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors"
-          >
-            {sortDir === "asc" ? "Ascending" : "Descending"}
-          </button>
+          <FilterPanel filters={filters} onChange={handleFiltersChange} providers={providers} />
 
-          <div className="ml-auto flex border border-surface-300 dark:border-surface-600 rounded-lg overflow-hidden">
+          <div className="flex items-center gap-2">
+            <select
+              value={sortField}
+              onChange={(e) => handleSortFieldChange(e.target.value as SortField)}
+              className="text-sm border border-surface-300 dark:border-surface-600 rounded-lg px-3 py-1.5 bg-white dark:bg-surface-800 dark:text-surface-50 focus:outline-none focus:ring-2 focus:ring-primary-500"
+            >
+              <option value="name">Name</option>
+              <option value="provider">Provider</option>
+              <option value="inputTokenPricePer1M">Input Price</option>
+              <option value="outputTokenPricePer1M">Output Price</option>
+              <option value="contextWindow">Context Window</option>
+              <option value="releaseDate">Release Date</option>
+            </select>
+            <button
+              onClick={handleSortDirChange}
+              className="text-sm border border-surface-300 dark:border-surface-600 rounded-lg px-3 py-1.5 bg-white dark:bg-surface-800 dark:text-surface-50 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors"
+            >
+              {sortDir === "asc" ? "Asc" : "Desc"}
+            </button>
+          </div>
+
+          <div className="flex border border-surface-300 dark:border-surface-600 rounded-lg overflow-hidden">
             <button
               onClick={() => handleViewModeChange("grid")}
               aria-label="Grid view"
