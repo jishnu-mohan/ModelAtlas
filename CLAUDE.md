@@ -21,23 +21,25 @@ Node 20 LTS (see `.nvmrc`). Package manager is npm.
 
 Static-first Next.js 16 app (App Router) with no backend. All AI model data lives in `src/data/models.json` — the single source of truth. Pages are statically generated at build time.
 
-**Data flow:** `models.json` -> `lib/data.ts` (accessors) -> `lib/filters.ts` / `lib/comparison.ts` -> Components -> Pages
+**Data flow:** `models.json` -> `lib/data.ts` (accessors) -> `lib/filters.ts` / `lib/comparison.ts` / `lib/calculator.ts` / `lib/recommend.ts` -> Components -> Pages
 
 ### Key directories
 
 - `src/app/` — Next.js App Router pages and layouts
-- `src/components/` — React components organized by domain (`ui/`, `models/`, `comparison/`, `layout/`)
-- `src/lib/` — Pure utility functions (data access, filtering, comparison, SEO). Tests in `__tests__/` subdirectories
+- `src/components/` — React components organized by domain (`ui/`, `models/`, `comparison/`, `recommend/`, `layout/`)
+- `src/lib/` — Pure utility functions (data access, filtering, comparison, calculator, recommendation, SEO). Tests in `__tests__/` subdirectories
 - `src/data/` — Static JSON data with validation tests
 - `src/config/site.ts` — Site-wide constants
 - `docs/` — Architecture docs and data contribution guide
 
 ### Route structure
 
-- `/` — Model explorer with search, filters, sorting
+- `/` — Model explorer with search, filters, sorting (filter state persisted in URL query params)
 - `/models/[id]` — Individual model detail page
 - `/compare/[...slugs]` — Side-by-side comparison (URL-encoded, e.g., `/compare/gpt-4o-vs-claude-sonnet`)
 - `/lists/[slug]` — Curated list pages (cheapest, largest-context, open-source, best-for-coding, best-for-reasoning)
+- `/calculator` — Cost calculator for estimating monthly API costs across all models
+- `/recommend` — Guided wizard that recommends models based on use case, budget, and requirements
 
 ### Core types
 
@@ -47,7 +49,14 @@ The `AIModel` interface in `src/lib/types.ts` defines the schema for all model d
 
 - TypeScript strict mode — no `any` types
 - Components should stay under 150 lines
-- Pure functions in `src/lib/` — no side effects
+- Pure functions in `src/lib/` — no side effects (calculator.ts, recommend.ts, filters.ts, comparison.ts)
 - Tailwind CSS 4 for all styling (custom theme colors defined in `globals.css`)
 - Path alias: `@/*` maps to `./src/*`
 - Comparisons are URL-encoded using `vs` separator between model IDs
+- Home page filter state is URL-serialized (e.g., `/?p=OpenAI&ct=cheap&tc=1`) via `filterStateToParams`/`paramsToFilterState` in `lib/filters.ts`
+- Client pages using `useSearchParams` must be wrapped in `<Suspense>`
+
+## Plan Requirements
+
+When creating implementation plans, include a **Required Permissions** section at the end listing all Bash commands and tool operations (Edit, Write, etc.) the plan will need during execution. Group them by tool type so permissions can be granted upfront before implementation begins.
+

@@ -1,5 +1,13 @@
 import { describe, it, expect } from "vitest";
-import { filterModels, sortModels, defaultFilterState } from "../filters";
+import {
+  filterModels,
+  sortModels,
+  defaultFilterState,
+  filterStateToParams,
+  paramsToFilterState,
+  defaultSortField,
+  defaultSortDir,
+} from "../filters";
 import { getAllModels } from "../data";
 import type { FilterState } from "../types";
 
@@ -85,5 +93,76 @@ describe("sortModels", () => {
     for (let i = 1; i < sorted.length; i++) {
       expect(sorted[i].contextWindow).toBeGreaterThanOrEqual(sorted[i - 1].contextWindow);
     }
+  });
+});
+
+describe("filterStateToParams", () => {
+  it("returns empty params for default state", () => {
+    const params = filterStateToParams(defaultFilterState, defaultSortField, defaultSortDir);
+    expect(params.toString()).toBe("");
+  });
+
+  it("encodes search term", () => {
+    const state: FilterState = { ...defaultFilterState, search: "gpt" };
+    const params = filterStateToParams(state, defaultSortField, defaultSortDir);
+    expect(params.get("q")).toBe("gpt");
+  });
+
+  it("encodes providers as comma-separated", () => {
+    const state: FilterState = { ...defaultFilterState, providers: ["OpenAI", "Anthropic"] };
+    const params = filterStateToParams(state, defaultSortField, defaultSortDir);
+    expect(params.get("p")).toBe("OpenAI,Anthropic");
+  });
+
+  it("encodes boolean flags", () => {
+    const state: FilterState = { ...defaultFilterState, openSourceOnly: true, toolCallingOnly: true };
+    const params = filterStateToParams(state, defaultSortField, defaultSortDir);
+    expect(params.get("oss")).toBe("1");
+    expect(params.get("tc")).toBe("1");
+  });
+
+  it("encodes non-default sort", () => {
+    const params = filterStateToParams(defaultFilterState, "contextWindow", "desc");
+    expect(params.get("sort")).toBe("contextWindow");
+    expect(params.get("dir")).toBe("desc");
+  });
+});
+
+describe("paramsToFilterState", () => {
+  it("returns defaults for empty params", () => {
+    const result = paramsToFilterState(new URLSearchParams());
+    expect(result.filters).toEqual(defaultFilterState);
+    expect(result.sortField).toBe(defaultSortField);
+    expect(result.sortDir).toBe(defaultSortDir);
+  });
+
+  it("round-trips through encode/decode", () => {
+    const state: FilterState = {
+      search: "claude",
+      providers: ["Anthropic"],
+      modalities: ["text", "vision"],
+      status: ["active"],
+      costTier: ["cheap", "mid"],
+      speedTier: ["fast"],
+      openSourceOnly: true,
+      toolCallingOnly: false,
+    };
+    const params = filterStateToParams(state, "contextWindow", "desc");
+    const result = paramsToFilterState(params);
+    expect(result.filters).toEqual(state);
+    expect(result.sortField).toBe("contextWindow");
+    expect(result.sortDir).toBe("desc");
+  });
+
+  it("ignores invalid modality values", () => {
+    const params = new URLSearchParams("m=text,invalid,vision");
+    const result = paramsToFilterState(params);
+    expect(result.filters.modalities).toEqual(["text", "vision"]);
+  });
+
+  it("ignores invalid sort field", () => {
+    const params = new URLSearchParams("sort=invalid");
+    const result = paramsToFilterState(params);
+    expect(result.sortField).toBe(defaultSortField);
   });
 });

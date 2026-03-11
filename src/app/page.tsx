@@ -1,8 +1,17 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { getAllModels, getUniqueProviders } from "@/lib/data";
-import { filterModels, sortModels, defaultFilterState } from "@/lib/filters";
+import {
+  filterModels,
+  sortModels,
+  defaultFilterState,
+  filterStateToParams,
+  paramsToFilterState,
+  defaultSortField,
+  defaultSortDir,
+} from "@/lib/filters";
 import type { FilterState, SortField, SortDirection } from "@/lib/types";
 import { SearchInput } from "@/components/ui/SearchInput";
 import { FilterPanel } from "@/components/ui/FilterPanel";
@@ -12,20 +21,58 @@ import { CompareBar } from "@/components/models/CompareBar";
 
 type ViewMode = "grid" | "list";
 
-export default function HomePage() {
+function HomeContent() {
   const allModels = getAllModels();
   const providers = getUniqueProviders();
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
+  const [initialized, setInitialized] = useState(false);
   const [filters, setFilters] = useState<FilterState>(defaultFilterState);
-  const [sortField, setSortField] = useState<SortField>("name");
-  const [sortDir, setSortDir] = useState<SortDirection>("asc");
+  const [sortField, setSortField] = useState<SortField>(defaultSortField);
+  const [sortDir, setSortDir] = useState<SortDirection>(defaultSortDir);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
+
+  // Initialize state from URL params on mount
+  useEffect(() => {
+    const parsed = paramsToFilterState(searchParams);
+    setFilters(parsed.filters);
+    setSortField(parsed.sortField);
+    setSortDir(parsed.sortDir);
+    setInitialized(true);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const stored = localStorage.getItem("modelExplorerViewMode");
     if (stored === "list") setViewMode("list");
   }, []);
+
+  // Sync state changes to URL
+  const updateUrl = useCallback(
+    (newFilters: FilterState, newSortField: SortField, newSortDir: SortDirection) => {
+      const params = filterStateToParams(newFilters, newSortField, newSortDir);
+      const queryString = params.toString();
+      router.replace(queryString ? `/?${queryString}` : "/", { scroll: false });
+    },
+    [router]
+  );
+
+  function handleFiltersChange(newFilters: FilterState) {
+    setFilters(newFilters);
+    if (initialized) updateUrl(newFilters, sortField, sortDir);
+  }
+
+  function handleSortFieldChange(field: SortField) {
+    setSortField(field);
+    if (initialized) updateUrl(filters, field, sortDir);
+  }
+
+  function handleSortDirChange() {
+    const newDir = sortDir === "asc" ? "desc" : "asc";
+    setSortDir(newDir);
+    if (initialized) updateUrl(filters, sortField, newDir);
+  }
 
   function handleViewModeChange(mode: ViewMode) {
     setViewMode(mode);
@@ -63,16 +110,16 @@ export default function HomePage() {
       <div className="space-y-4 mb-6">
         <SearchInput
           value={filters.search}
-          onChange={(search) => setFilters({ ...filters, search })}
+          onChange={(search) => handleFiltersChange({ ...filters, search })}
           placeholder="Search by model name, provider, or use case..."
         />
-        <FilterPanel filters={filters} onChange={setFilters} providers={providers} />
+        <FilterPanel filters={filters} onChange={handleFiltersChange} providers={providers} />
 
         <div className="flex items-center gap-3">
           <label className="text-sm text-surface-500 dark:text-surface-400">Sort by:</label>
           <select
             value={sortField}
-            onChange={(e) => setSortField(e.target.value as SortField)}
+            onChange={(e) => handleSortFieldChange(e.target.value as SortField)}
             className="text-sm border border-surface-300 dark:border-surface-600 rounded-lg px-3 py-1.5 bg-white dark:bg-surface-800 dark:text-surface-50 focus:outline-none focus:ring-2 focus:ring-primary-500"
           >
             <option value="name">Name</option>
@@ -83,7 +130,7 @@ export default function HomePage() {
             <option value="releaseDate">Release Date</option>
           </select>
           <button
-            onClick={() => setSortDir(sortDir === "asc" ? "desc" : "asc")}
+            onClick={handleSortDirChange}
             className="text-sm border border-surface-300 dark:border-surface-600 rounded-lg px-3 py-1.5 bg-white dark:bg-surface-800 dark:text-surface-50 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors"
           >
             {sortDir === "asc" ? "Ascending" : "Descending"}
@@ -136,5 +183,13 @@ export default function HomePage() {
         onClear={() => setSelectedIds(new Set())}
       />
     </div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <Suspense>
+      <HomeContent />
+    </Suspense>
   );
 }

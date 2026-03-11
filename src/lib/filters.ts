@@ -1,4 +1,4 @@
-import type { AIModel, FilterState, SortDirection, SortField } from "./types";
+import type { AIModel, CostTier, FilterState, Modality, ModelStatus, SortDirection, SortField, SpeedTier } from "./types";
 
 export const defaultFilterState: FilterState = {
   search: "",
@@ -10,6 +10,81 @@ export const defaultFilterState: FilterState = {
   openSourceOnly: false,
   toolCallingOnly: false,
 };
+
+export const defaultSortField: SortField = "name";
+export const defaultSortDir: SortDirection = "asc";
+
+const validModalities: Modality[] = ["text", "vision", "audio", "image-gen", "video"];
+const validStatuses: ModelStatus[] = ["active", "deprecated"];
+const validCostTiers: CostTier[] = ["cheap", "mid", "premium"];
+const validSpeedTiers: SpeedTier[] = ["fast", "balanced", "advanced"];
+const validSortFields: SortField[] = [
+  "name", "provider", "inputTokenPricePer1M", "outputTokenPricePer1M",
+  "contextWindow", "maxOutputTokens", "releaseDate",
+];
+
+export function filterStateToParams(
+  state: FilterState,
+  sortField: SortField,
+  sortDir: SortDirection
+): URLSearchParams {
+  const params = new URLSearchParams();
+
+  if (state.search) params.set("q", state.search);
+  if (state.providers.length > 0) params.set("p", state.providers.join(","));
+  if (state.modalities.length > 0) params.set("m", state.modalities.join(","));
+  if (state.status.length > 0) params.set("s", state.status.join(","));
+  if (state.costTier.length > 0) params.set("ct", state.costTier.join(","));
+  if (state.speedTier.length > 0) params.set("st", state.speedTier.join(","));
+  if (state.openSourceOnly) params.set("oss", "1");
+  if (state.toolCallingOnly) params.set("tc", "1");
+  if (sortField !== defaultSortField) params.set("sort", sortField);
+  if (sortDir !== defaultSortDir) params.set("dir", sortDir);
+
+  return params;
+}
+
+export function paramsToFilterState(params: URLSearchParams): {
+  filters: FilterState;
+  sortField: SortField;
+  sortDir: SortDirection;
+} {
+  const modalities = (params.get("m")?.split(",") ?? []).filter(
+    (v): v is Modality => validModalities.includes(v as Modality)
+  );
+  const status = (params.get("s")?.split(",") ?? []).filter(
+    (v): v is ModelStatus => validStatuses.includes(v as ModelStatus)
+  );
+  const costTier = (params.get("ct")?.split(",") ?? []).filter(
+    (v): v is CostTier => validCostTiers.includes(v as CostTier)
+  );
+  const speedTier = (params.get("st")?.split(",") ?? []).filter(
+    (v): v is SpeedTier => validSpeedTiers.includes(v as SpeedTier)
+  );
+
+  const sortParam = params.get("sort");
+  const sortField: SortField = sortParam && validSortFields.includes(sortParam as SortField)
+    ? (sortParam as SortField)
+    : defaultSortField;
+
+  const dirParam = params.get("dir");
+  const sortDir: SortDirection = dirParam === "desc" ? "desc" : "asc";
+
+  return {
+    filters: {
+      search: params.get("q") ?? "",
+      providers: params.get("p")?.split(",").filter(Boolean) ?? [],
+      modalities,
+      status,
+      costTier,
+      speedTier,
+      openSourceOnly: params.get("oss") === "1",
+      toolCallingOnly: params.get("tc") === "1",
+    },
+    sortField,
+    sortDir,
+  };
+}
 
 export function filterModels(models: AIModel[], filters: FilterState): AIModel[] {
   return models.filter((model) => {

@@ -26,10 +26,16 @@ export function Header() {
               Models
             </Link>
             <Link
-              href="/lists/best-ai-models-for-coding"
+              href="/calculator"
               className="text-surface-600 dark:text-surface-300 hover:text-surface-900 dark:hover:text-surface-50 text-sm font-medium transition-colors"
             >
-              Best For
+              Calculator
+            </Link>
+            <Link
+              href="/recommend"
+              className="text-surface-600 dark:text-surface-300 hover:text-surface-900 dark:hover:text-surface-50 text-sm font-medium transition-colors"
+            >
+              Recommend
             </Link>
             <Link
               href="/lists/cheapest-ai-models"
@@ -99,8 +105,11 @@ export function Header() {
             <Link href="/" className="text-surface-600 dark:text-surface-300 hover:text-surface-900 dark:hover:text-surface-50 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
               Models
             </Link>
-            <Link href="/lists/best-ai-models-for-coding" className="text-surface-600 dark:text-surface-300 hover:text-surface-900 dark:hover:text-surface-50 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
-              Best For
+            <Link href="/calculator" className="text-surface-600 dark:text-surface-300 hover:text-surface-900 dark:hover:text-surface-50 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+              Calculator
+            </Link>
+            <Link href="/recommend" className="text-surface-600 dark:text-surface-300 hover:text-surface-900 dark:hover:text-surface-50 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+              Recommend
             </Link>
             <Link href="/lists/cheapest-ai-models" className="text-surface-600 dark:text-surface-300 hover:text-surface-900 dark:hover:text-surface-50 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
               Lists
